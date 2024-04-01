@@ -4,17 +4,44 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    private Rigidbody2D body;
-    private void Awake()
+    public CharacterController2D controller;
+    public Animator animator;
+
+    public float runSpeed = 40f;
+    
+    float horizontalMove = 0f;
+    bool jump = false;
+
+
+    void Update()
     {
-        body = GetComponent<Rigidbody2D>();
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+        if (Mathf.Abs(horizontalMove) > 0f)
+        {
+            animator.SetInteger("AnimState", 2);
+        }
+        else
+        {
+            animator.SetInteger("AnimState", 0);
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetTrigger("Jump");
+            jump = true;
+        }
+    } 
+    public void OnLanding()
+    {
+        animator.ResetTrigger("Jump");
+        jump = false;
+        //animator.SetBool("Grounded", true);
     }
 
-    private void Update()
+    void FixedUpdate()
     {
-        body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
-        if(Input.GetKeyDown(KeyCode.Space))
-            body.velocity = new Vector2(body.velocity.x, speed);
+        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
+        jump = false;
+        
     }
 }
