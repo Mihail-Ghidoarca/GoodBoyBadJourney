@@ -9,7 +9,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Attack()
+            Attack();
         }    
     }
 
