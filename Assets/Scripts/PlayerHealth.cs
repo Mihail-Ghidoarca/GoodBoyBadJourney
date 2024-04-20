@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
         animator.SetTrigger("Hurt");
         if (health <= 0)
         {
+            animator.SetTrigger("Death");
             Destroy(gameObject);
         }
     }
