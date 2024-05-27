@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
 
         animator.SetTrigger("Hurt");
 
-
         if(currentHealth <= 0)
         {
             Die();

@@ -27,13 +27,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump"))
         {
-            animator.SetTrigger("Jump");
+            animator.SetTrigger("IsJumping");
             jump = true;
         }
     } 
     public void OnLanding()
     {
-        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("IsJumping");
         jump = false;
         //animator.SetBool("Grounded", true);
     }
