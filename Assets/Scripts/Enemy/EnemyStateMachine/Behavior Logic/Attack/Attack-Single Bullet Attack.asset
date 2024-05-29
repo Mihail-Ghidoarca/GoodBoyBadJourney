@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f663a3e53f18de94c8ff094904d45a54, type: 3}
+  m_Name: Attack-Single Bullet Attack
+  m_EditorClassIdentifier: 
+  Bullet: {fileID: 5366865956470908611, guid: 6cae2db803f9d60478831191008cdfc8, type: 3}
+  _timeBetweenShots: 2
+  _timeUntilExit: 3
+  _distanceToCountExit: 3
+  _bulletSpeed: 10

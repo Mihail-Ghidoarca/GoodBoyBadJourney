@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
@@ -21,6 +23,11 @@ public class EnemyPatrol : MonoBehaviour
     [Header("Enemy Animator")]
     [SerializeField] private Animator anim;
 
+    public float distanceBetween;
+    private float distance;
+    public GameObject player;
+
+
     private void Awake()
     {
         initScale = enemy.localScale;
@@ -32,20 +39,28 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Update()
     {
-        if (movingLeft)
-        {
-            if (enemy.position.x >= leftEdge.position.x)
-                MoveInDirection(-1);
-            else
-                DirectionChange();
-        }
+        distance = Vector2.Distance(transform.position, player.transform.position);
+        Vector2 direction = player.transform.position - transform.position;
+        direction.Normalize();
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Start chasing the player if he gets closer to the enemy.
+        if(distance < distanceBetween)
+            ChasePlayer();
         else
-        {
-            if (enemy.position.x <= rightEdge.position.x)
-                MoveInDirection(1);
+            if (movingLeft)
+            {
+                if (enemy.position.x >= leftEdge.position.x)
+                    MoveInDirection(-1);
+                else
+                    DirectionChange();
+            }
             else
-                DirectionChange();
-        }
+            {
+                if (enemy.position.x <= rightEdge.position.x)
+                    MoveInDirection(1);
+                else
+                    DirectionChange();
+            }
     }
 
     private void DirectionChange()
@@ -63,11 +78,24 @@ public class EnemyPatrol : MonoBehaviour
         anim.SetBool("moving", true);
 
         //Make enemy face direction
-        enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction,
+        enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * (-_direction),
             initScale.y, initScale.z);
 
         //Move in that direction
         enemy.position = new Vector3(enemy.position.x + Time.deltaTime * _direction * speed,
             enemy.position.y, enemy.position.z);
     }
+
+    private void ChasePlayer()
+    {
+        if (distance < distanceBetween)
+        {
+            transform.position = Vector2.MoveTowards(enemy.transform.position, player.transform.position, speed * Time.deltaTime);
+        }
+        else
+            idleTimer += Time.deltaTime;
+         
+
+    }
+
 }
