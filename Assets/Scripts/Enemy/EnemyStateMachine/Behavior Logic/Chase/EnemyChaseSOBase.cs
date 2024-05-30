@@ -27,10 +27,6 @@ public class EnemyChaseSOBase : ScriptableObject
         {
             enemy.StateMachine.ChangeState(enemy.AttackState);
         }
-        if (!enemy.IsAggroed)
-        {
-            enemy.StateMachine.ChangeState(enemy.IdleState);
-        }
     }
     public virtual void DoPhysicsUpdateLogic() { }
     public virtual void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType) { }

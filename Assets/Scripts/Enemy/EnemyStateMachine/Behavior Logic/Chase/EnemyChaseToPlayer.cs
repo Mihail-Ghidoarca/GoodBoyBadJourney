@@ -30,6 +30,10 @@ public class EnemyChaseToPlayer : EnemyChaseSOBase
         Vector2 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
 
         enemy.MoveEnemy(moveDirection * _movementSpeed);
+        if(!enemy.IsAggroed)
+        {
+            enemy.StateMachine.ChangeState(enemy.IdleState);
+        }
     }
 
     public override void DoPhysicsUpdateLogic()

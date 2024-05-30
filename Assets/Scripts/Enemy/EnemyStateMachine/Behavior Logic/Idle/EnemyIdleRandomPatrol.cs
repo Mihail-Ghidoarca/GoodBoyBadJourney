@@ -32,7 +32,6 @@ public class EnemyIdleRandomPatrol : EnemyIdleSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        Debug.Log("idleidleidleidle");
         _direction = (_targetPos - enemy.transform.position).normalized;
         enemy.MoveEnemy(_direction * RandomMovementSpeed);
 
