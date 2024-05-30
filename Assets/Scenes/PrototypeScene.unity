@@ -1959,7 +1959,6 @@ GameObject:
   - component: {fileID: 480741975}
   - component: {fileID: 480741966}
   - component: {fileID: 480741973}
-  - component: {fileID: 480741972}
   - component: {fileID: 480741976}
   - component: {fileID: 480741977}
   - component: {fileID: 480741978}
@@ -2148,18 +2147,6 @@ Transform:
   - {fileID: 1449894186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &480741972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480741965}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14bfbed8fa114b441b8e3ae2d8f7bd26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &480741973
 Animator:
   serializedVersion: 5
@@ -2243,6 +2230,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  enemy: {fileID: 220649977}
   attackRange: 0.43
   attackDamage: 40
   attackRate: 2
@@ -2387,7 +2375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7.5
-  jumpForce: 10
+  jumpForce: 7
   jumpTime: 0.5
   isFacingRight: 0
   extraHeight: 0.25

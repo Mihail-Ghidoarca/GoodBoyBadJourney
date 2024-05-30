@@ -78,12 +78,12 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         }
     }
 
-    #endregion
     public void Die()
     {
         Destroy(gameObject);
     }
 
+    #endregion
     #region Movement Functions
 
     public void MoveEnemy(Vector2 velocity)
