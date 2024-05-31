@@ -38,7 +38,7 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
         {
             _timer = 0f;
             Vector2 dir = (playerTransform.position - enemy.transform.position).normalized;
-            Rigidbody2D bullet = GameObject.Instantiate(Bullet, enemy.transform.position, Quaternion.identity);
+            Rigidbody2D bullet = GameObject.Instantiate(Bullet, enemy.transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
             bullet.velocity = dir * _bulletSpeed;
         }
 

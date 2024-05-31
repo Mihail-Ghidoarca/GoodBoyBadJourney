@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: Chase-Player Chase
   m_EditorClassIdentifier: 
   _movementSpeed: 3
+  jumpForce: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8

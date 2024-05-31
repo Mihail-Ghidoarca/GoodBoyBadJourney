@@ -7,7 +7,7 @@ public class EnemyIdleSOBase : ScriptableObject
     protected Enemy enemy;
     protected Transform transform;
     protected GameObject gameObject;
-
+    public Vector2 currentPosition;
     protected Transform playerTransform;
 
     public virtual void Initialize(GameObject gameObject, Enemy enemy)
@@ -17,6 +17,7 @@ public class EnemyIdleSOBase : ScriptableObject
         this.enemy = enemy;
 
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        currentPosition = enemy.transform.position;
     }
 
     public virtual void DoEnterLogic() { }

@@ -8,7 +8,7 @@ public class EnemyIdleRandomPatrol : EnemyIdleSOBase
 {
     [SerializeField]public float RandomMovementRange = 5f;
     [SerializeField]public float RandomMovementSpeed = 1f;
-
+    
     private Vector3 _targetPos;
     private Vector3 _direction;
 
@@ -27,6 +27,7 @@ public class EnemyIdleRandomPatrol : EnemyIdleSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+        
     }
 
     public override void DoFrameUpdateLogic()
@@ -34,13 +35,13 @@ public class EnemyIdleRandomPatrol : EnemyIdleSOBase
         base.DoFrameUpdateLogic();
         _direction = (_targetPos - enemy.transform.position).normalized;
         enemy.MoveEnemy(_direction * RandomMovementSpeed);
-
+        
         if ((enemy.transform.position - _targetPos).sqrMagnitude < 0.01f)
         {
             _targetPos = GetRandomXPoint();
         }
     }
-
+    
     public override void DoPhysicsUpdateLogic()
     {
         base.DoPhysicsUpdateLogic();
@@ -58,14 +59,11 @@ public class EnemyIdleRandomPatrol : EnemyIdleSOBase
 
     private Vector3 GetRandomXPoint()
     {
-        // Generate a random x offset within the specified range
         float randomOffsetX = UnityEngine.Random.Range(-RandomMovementRange, RandomMovementRange);
 
-        // Create the new position by adding the random offset to the enemy's current position
         Vector3 newPosition = enemy.transform.position;
         newPosition.x += randomOffsetX;
 
-        // Return the new position
         return newPosition;
     }
 }

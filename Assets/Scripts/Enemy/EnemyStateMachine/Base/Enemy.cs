@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public float CurrentHealth { get; set; }
     public Rigidbody2D RB { get; set; }
     public bool isFacingRight { get; set; } = false;
-
+    public Collider2D coll { get; set;}
+    [field: SerializeField] public Animator animator { get; set; }
     #region State Machine Variables
     public EnemyStateMachine StateMachine { get; set; }
     public EnemyIdleState IdleState {  get; set; }
@@ -31,8 +32,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     #endregion
 
-
-
     private void Awake()
     {
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
@@ -51,7 +50,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         CurrentHealth = MaxHealth;
 
         RB = GetComponent<Rigidbody2D>();
-
+        coll = GetComponent<Collider2D>();
         EnemyIdleBaseInstance.Initialize(gameObject, this);
         EnemyChaseBaseInstance.Initialize(gameObject, this);
         EnemyAttackBaseInstance.Initialize(gameObject, this);
@@ -88,7 +87,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     public void MoveEnemy(Vector2 velocity)
     {
-        RB.velocity = velocity;
+         
+        RB.velocity = new Vector2(velocity.x, 0);
         CheckForLeftOrRightFacing(velocity);
     }
 

@@ -86,6 +86,7 @@ public class Player : MonoBehaviour
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            animator.SetTrigger("IsJumping");
         }
 
         if (UserInput.instance.controls.Jumping.Jump.IsPressed())
@@ -96,15 +97,17 @@ public class Player : MonoBehaviour
                 jumpTimeCounter -= Time.deltaTime;
             }
 
-            else
+            else if(jumpTimeCounter == 0)
             {
                 isJumping = false;
+                animator.ResetTrigger("IsJumping");
             }
         }
 
         if(UserInput.instance.controls.Jumping.Jump.WasReleasedThisFrame())
         {
             isJumping = false;
+            animator.ResetTrigger("IsJumping");
         }
     }
 
