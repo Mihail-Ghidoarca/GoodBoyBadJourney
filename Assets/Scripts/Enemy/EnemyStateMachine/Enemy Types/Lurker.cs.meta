@@ -3,7 +3,11 @@ guid: 0c66ff039357a8d48abe829b7726cc67
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - <animator>k__BackingField: {instanceID: 0}
+  - EnemyIdleBase: {fileID: 11400000, guid: 334bfa2cf7423c549b4ef5590de43697, type: 2}
+  - EnemyChaseBase: {fileID: 11400000, guid: 9ac9f2f7bc549cc458ee7f0a74f0361e, type: 2}
+  - EnemyAttackBase: {fileID: 11400000, guid: ca443f144fd45f94ea7ea91cc4ca41ba, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

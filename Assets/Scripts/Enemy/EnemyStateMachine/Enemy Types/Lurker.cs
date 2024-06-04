@@ -6,4 +6,5 @@ using UnityEngine;
 
 public class Lurker : Enemy
 {
+    
 }

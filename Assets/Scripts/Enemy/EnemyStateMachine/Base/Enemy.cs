@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     #endregion
 
     #region ScriptableObject Variables
+
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
     [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
     [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
@@ -88,7 +89,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public void MoveEnemy(Vector2 velocity)
     {
          
-        RB.velocity = new Vector2(velocity.x, 0);
+        RB.velocity = new Vector2(velocity.x, 0f);
         CheckForLeftOrRightFacing(velocity);
     }
 

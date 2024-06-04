@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b8e0d64c4a7904ea922212a648d8e5, type: 3}
   m_Name: Chase-Player Chase
   m_EditorClassIdentifier: 
-  _movementSpeed: 3
+  _movementSpeed: 5
   jumpForce: 2
   groundLayer:
     serializedVersion: 2
