@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static PlayerHealth instance;
     public Animator animator;
     public int maxHealth = 100;
-    public int health;
-    void Start()
+    public int currentHealth;
+
+    private void Awake()
     {
-        health = maxHealth;
+        instance = this;
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        animator.SetTrigger("Hurt");
-        if (health <= 0)
+        currentHealth -= damage;
+        animator.SetTrigger("hit");
+        if (currentHealth <= 0)
         {
-            animator.SetTrigger("Death");
+            animator.SetTrigger("isDead");
             Destroy(gameObject);
         }
     }

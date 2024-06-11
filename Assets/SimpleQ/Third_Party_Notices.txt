@@ -1,0 +1,12 @@
+Third-Party Notices
+
+The asset contains the following third-party content:
+
+1.
+
+Type: 3D Model
+Name: Robot
+Owner: Quaternius
+License: CC0
+Content-Link: https://quaternius.com/packs/animatedrobot.html
+Usage: The Robot model is used in the "DodgeBotExample" to demonstrate a 3D object using QLearning.

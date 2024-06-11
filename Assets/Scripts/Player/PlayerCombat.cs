@@ -2,49 +2,132 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
-    public Transform attackPoint;
-    public LayerMask enemyLayers;
-    public Enemy enemy;
-    public float attackRange = 0.5f;
-    public int attackDamage = 40;
+ 
+    [SerializeField] Transform SideAttackTransform, UpAttackTransform, DownAttackTransform;
+    [SerializeField] Vector2 SideAttackArea, UpAttackArea, DownAttackArea;
 
-    public float attackRate = 2f;
-    float nextAttackTime = 0f;
+    [SerializeField] private Transform attackTransform;
+    [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private LayerMask attackableLayer;
+    [SerializeField] private float damageAmount = 20f;
+    [SerializeField] private float timeBtwAttacks = 0.15f;
+    [SerializeField] GameObject slashEffect;
+
+    public bool ShouldBeDamaging { get; private set; } = false;
+
+    private List<IDamageable> iDamageables = new List<IDamageable>();
+
+    private float attackTimeCounter;
+
+    RaycastHit2D[] hits;
+
+    private float moveInput, yInput;
+
+    private void Start()
+    {
+        animator.GetComponent<Animator>();
+
+        attackTimeCounter = timeBtwAttacks;
+    }
 
     void Update()
     {
-        if (Time.time >= nextAttackTime)
+        GetInputs();
+        if (UserInput.instance.controls.Attacking.Attack.WasPressedThisFrame() && attackTimeCounter >= timeBtwAttacks)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            attackTimeCounter = 0f;
+
+            animator.SetTrigger("attack");
+        }
+
+        attackTimeCounter += Time.deltaTime;
+    }
+
+    void GetInputs()
+    {
+        moveInput = UserInput.instance.moveInput.x;
+        yInput = UserInput.instance.moveInput.y;
+    }
+
+    public IEnumerator DamageWhileSlashIsActive()
+    {
+        ShouldBeDamaging = true;
+
+        while (ShouldBeDamaging)
+        {
+            if (yInput >= Mathf.Abs(moveInput) && yInput >= 0.3)
             {
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
+                hits = Physics2D.CircleCastAll(UpAttackTransform.position, attackRange, transform.right, 0f, attackableLayer);
+                SlashEffectAngle(slashEffect, 90, UpAttackTransform);
             }
+            else if (yInput <= -Mathf.Abs(moveInput) && yInput <= -0.3)
+            {
+                hits = Physics2D.CircleCastAll(DownAttackTransform.position, attackRange, transform.right, 0f, attackableLayer);
+                SlashEffectAngle(slashEffect, -90, DownAttackTransform);
+            }
+            else
+            {
+                hits = Physics2D.CircleCastAll(SideAttackTransform.position, attackRange, transform.right, 0f, attackableLayer);
+                Instantiate(slashEffect, SideAttackTransform);
+            }
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                IDamageable iDamageable = hits[i].collider.gameObject.GetComponent<IDamageable>();
+
+                if (iDamageable != null)
+                {
+                    iDamageable.Damage(damageAmount);
+                }
+            }
+            yield return null;
         }
+
+        ReturnAttackablesToDamageable();
     }
 
-    void Attack()
+    void SlashEffectAngle(GameObject _slashEffect, int _effectAngle, Transform _attackTransform)
     {
-        animator.SetTrigger("Attack");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            enemy.GetComponent<Enemy>().Damage(attackDamage);
-        }
+        _slashEffect = Instantiate(_slashEffect, _attackTransform);
+        _slashEffect.transform.eulerAngles = new Vector3(0f, 0f, _effectAngle);
+        _slashEffect.transform.localScale = new Vector2(0.1f, 0.3f);
     }
 
-    void OnDrawGizmosSelected()
+    private void ReturnAttackablesToDamageable()
     {
-        if(attackPoint == null)
+        foreach (IDamageable thingThatWasDamaged in iDamageables)
         {
-            return;
+            thingThatWasDamaged.HasTakenDamage = false;
         }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+
+        iDamageables.Clear();
     }
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(SideAttackTransform.position, attackRange);
+        Gizmos.DrawWireCube(DownAttackTransform.position, DownAttackArea);
+        Gizmos.DrawWireCube(UpAttackTransform.position, UpAttackArea);
+    }
+
+    #region Animation Triggers
+    public void ShouldBeDamagingToTrue()
+    {
+        ShouldBeDamaging = true;
+    }
+
+    public void ShouldBeDamagingToFalse()
+    {
+        ShouldBeDamaging = false;
+    }
+
+    #endregion
 
 }

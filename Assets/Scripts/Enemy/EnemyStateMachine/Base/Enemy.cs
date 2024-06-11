@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public EnemyChaseState ChaseState { get; set; }
     public bool IsAggroed { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
+    public bool HasTakenDamage { get; set; }
 
     #endregion
 
@@ -72,8 +73,12 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     #region Health and Die functions
     public void Damage(float damageAmount)
     {
+        HasTakenDamage = true;
+        animator.SetTrigger("Hurt");
+
         CurrentHealth -= damageAmount;
         if (CurrentHealth <= 0f) {
+            animator.SetTrigger("Death");
             Die();
         }
     }
@@ -82,6 +87,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     {
         Destroy(gameObject);
     }
+
+
 
     #endregion
     #region Movement Functions

@@ -9,4 +9,6 @@ public interface IDamageable
     float MaxHealth { get; set;}
     float CurrentHealth { get; set;}
 
+    public bool HasTakenDamage { get; set; }
+
 }

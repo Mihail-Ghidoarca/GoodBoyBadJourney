@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Checks")]
     [SerializeField] private Transform _groundCheckPoint;
-    [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.49f, 0.03f);
+    [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.75f, 0.03f);
     [Space(5)]
     [SerializeField] private Transform _frontWallCheckPoint;
     [SerializeField] private Transform _backWallCheckPoint;
@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
+        animator.GetComponent<Animator>();
     }
 
     private void Start()
@@ -67,15 +68,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (_moveInput.x != 0)
         {
+            animator.SetBool("isRunning", true);
             CheckDirectionToFace(_moveInput.x > 0);
         }
+        else
+            animator.SetBool("isRunning", false);
+        
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || UserInput.instance.controls.Jumping.Jump.WasPressedThisFrame())
+        if (UserInput.instance.controls.Jumping.Jump.WasPressedThisFrame())
         {
             OnJumpInput();
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || UserInput.instance.controls.Jumping.Jump.WasPressedThisFrame())
+        if (UserInput.instance.controls.Jumping.Jump.WasReleasedThisFrame())
         {
             OnJumpUpInput();
         }
@@ -84,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         #region COLLISION CHECKS
         if (!IsJumping)
         {
+            animator.SetBool("isJumping", false);
             if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer) && !IsJumping)
             {
                 LastOnGroundTime = Data.coyoteTime;
@@ -98,6 +104,10 @@ public class PlayerMovement : MonoBehaviour
 				LastOnWallLeftTime = Data.coyoteTime;
 
             LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
+        }
+        else
+        {
+            animator.SetBool("isJumping", true);
         }
         #endregion
 
@@ -130,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
             _isJumpCut = false;
             _isJumpFalling = false;
             Jump();
+
         }
 
         else if (CanWallJump() && LastPressedJumpTime > 0)
