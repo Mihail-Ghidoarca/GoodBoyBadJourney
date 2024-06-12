@@ -275,6 +275,8 @@ public class PlayerMovement : MonoBehaviour
     #region JUMP METHODS
     private void Jump()
     {
+        GlobalVars.AddToActionArray(PlayerAction.Jump);
+        //Debug.Log(GlobalVars.actionQueue.Peek());
         LastPressedJumpTime = 0;
         LastOnGroundTime = 0;
 

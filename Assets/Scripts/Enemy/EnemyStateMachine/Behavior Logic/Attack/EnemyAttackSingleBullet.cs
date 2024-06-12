@@ -33,7 +33,8 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
     {
         base.DoFrameUpdateLogic();
         enemy.MoveEnemy(Vector2.zero);
-        Debug.Log("salsallaslsal");
+        //Debug.Log("salsallaslsal");
+        Debug.Log("am scos: " + GlobalVars.GetAction());
         if (_timer > _timeBetweenShots)
         {
             _timer = 0f;

@@ -89,12 +89,13 @@ namespace QLearningExample
         private List<TrainingBots> trainingBots = new List<TrainingBots>();
 
 
-        void Start()
+        void Start() //Initialises the brain
         {
+
             if (!battleBrain.loaded) { battleBrain.InitializeQBrain(); }
         }
 
-        public void FightButtonClick()
+        public void FightButtonClick() // simulates a single battle
         {
             if (training) { return; }
             SingleFIght = true;
@@ -108,7 +109,7 @@ namespace QLearningExample
             StartCoroutine(SimulateABattle(tb.fightInstance, tb));
         }
 
-        public void MultiFightTraining()
+        public void MultiFightTraining() // simulates multiple fights
         {
             //In case we are running the annealing, start a new count
             if (battleBrain.epsilonAnnealingDecay || battleBrain.temperatureAnnealingDecay) { battleBrain.ResetAnnealingEpisodeDecayCount(); }

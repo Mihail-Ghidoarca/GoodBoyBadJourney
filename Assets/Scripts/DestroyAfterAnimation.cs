@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestroyAfterAnimation : MonoBehaviour
 {
     public float delay = 0f;
-
+    public Animator animator;
     void Start()
     {
         Destroy(gameObject, this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + delay);

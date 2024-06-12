@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public bool IsAggroed { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
     public bool HasTakenDamage { get; set; }
-
     #endregion
 
     #region ScriptableObject Variables
@@ -34,8 +33,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     #endregion
 
-    private void Awake()
+    public void Awake()
     {
+
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
         EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
@@ -47,10 +47,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         ChaseState = new EnemyChaseState(this, StateMachine);
     }
 
-    private void Start()
+    public void Start()
     {
         CurrentHealth = MaxHealth;
-
         RB = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         EnemyIdleBaseInstance.Initialize(gameObject, this);
@@ -60,18 +59,18 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         StateMachine.Initialize(IdleState);
     }
 
-    private void Update()
+    public void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         StateMachine.CurrentEnemyState.PhysicsUpdate();
     }
 
     #region Health and Die functions
-    public void Damage(float damageAmount)
+    public void TakeDamage(float damageAmount)
     {
         HasTakenDamage = true;
         animator.SetTrigger("Hurt");

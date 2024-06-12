@@ -12,20 +12,25 @@ public class AgentController : MonoBehaviour
     {
         "Attack",
         "Defend",
-        "Flee"
+        "Run"
     };
 
     private State_Class currentState;
     private State_Class newState;
 
-    private PlayerHealth playerHealth;
+    public PlayerHealth playerHealth;
     private int enemyHealth;
+
+    public Lurker lurker;
 
     public State_Class GetMyState()
     {
         State_Class state = new State_Class();
 
+        playerHealth.maxHealth = 60;
+        enemyHealth = 40;
         state.stateString = playerHealth.currentHealth + "," + enemyHealth;
+
 
         return state;
     }
@@ -49,26 +54,35 @@ public class AgentController : MonoBehaviour
 
     public void AgentAttack()
     {
-
+        Debug.Log("Agent attacked");
+        playerHealth.currentHealth -= 20;
     }
 
     public void AgentDefend()
     {
-
+        Debug.Log("Agent defended");
     }
 
     public void AgentRun()
     {
-
+        Debug.Log("Agent ran");
+        enemyHealth -= 10;
     }
 
     public void EnemyAttack()
+    {
+        Debug.Log("Player attacked back");
+        enemyHealth -= 20;
+    }
+
+    public void InitBrain()
     {
 
     }
 
     public void ExampleRound()
     {
+        Debug.Log("AAAAAAAAAAAAAAAAAA");
         currentState = GetMyState();
 
         string choice = myBrainScript.MakeAChoice(currentState.stateString);
@@ -92,6 +106,8 @@ public class AgentController : MonoBehaviour
         newState = GetMyState();
 
         float reward = RewardForActions();
+
+        Debug.Log("Score is: " + reward);
 
         myBrainScript.UpdateReward(reward, newState);
     }

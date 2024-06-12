@@ -41,7 +41,7 @@ public class PlayerCombat : MonoBehaviour
         if (UserInput.instance.controls.Attacking.Attack.WasPressedThisFrame() && attackTimeCounter >= timeBtwAttacks)
         {
             attackTimeCounter = 0f;
-
+            GlobalVars.AddToActionArray(PlayerAction.MeleeAttack);
             animator.SetTrigger("attack");
         }
 
@@ -82,7 +82,7 @@ public class PlayerCombat : MonoBehaviour
 
                 if (iDamageable != null)
                 {
-                    iDamageable.Damage(damageAmount);
+                    iDamageable.TakeDamage(damageAmount);
                 }
             }
             yield return null;

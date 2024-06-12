@@ -27,7 +27,7 @@ public class EnemyChaseToPlayer : EnemyChaseSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        Debug.Log("chasechasechase");
+        //Debug.Log("chasechasechase");
         Vector2 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
         enemy.MoveEnemy(moveDirection * _movementSpeed);
     }

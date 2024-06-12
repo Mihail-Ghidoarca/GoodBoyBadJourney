@@ -1,0 +1,1 @@
+public enum PlayerAction {Jump, Dash, MeleeAttack, RangedAttack, Defend}
