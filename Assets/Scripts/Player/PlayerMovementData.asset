@@ -21,8 +21,8 @@ MonoBehaviour:
   runMaxSpeed: 9.5
   runAcceleration: 9.5
   runAccelAmount: 50
-  runDecceleration: 9.5
-  runDeccelAmount: 50
+  runDecceleration: 5
+  runDeccelAmount: 26.31579
   accelInAir: 1
   deccelInAir: 1
   doConserveMomentum: 0
@@ -35,10 +35,19 @@ MonoBehaviour:
   jumpHangAccelerationMult: 1
   jumpHangMaxSpeedMult: 1
   wallJumpForce: {x: 10, y: 20}
-  wallJumpRunLerp: 1
-  wallJumpTime: 0.221
-  doTurnOnWallJump: 1
+  wallJumpRunLerp: 0.454
+  wallJumpTime: 0.3
+  doTurnOnWallJump: 0
   slideSpeed: -6
   slideAccel: 12
   coyoteTime: 0.1
   jumpInputBufferTime: 0.2
+  dashAmount: 1
+  dashSpeed: 50
+  dashSleepTime: 0.05
+  dashAttackTime: 0.25
+  dashEndTime: 0.2
+  dashEndSpeed: {x: 15, y: 15}
+  dashEndRunLerp: 0.62
+  dashRefillTime: 0.5
+  dashInputBufferTime: 0.101

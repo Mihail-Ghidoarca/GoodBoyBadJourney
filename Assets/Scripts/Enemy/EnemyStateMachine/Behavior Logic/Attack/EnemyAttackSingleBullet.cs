@@ -10,6 +10,8 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
     [SerializeField] private float _timeUntilExit = 3;
     [SerializeField] private float _distanceToCountExit = 3f;
     [SerializeField] private float _bulletSpeed = 10f;
+    [SerializeField ] private float attackDamage = 20;
+
 
     private float _timer;
     private float _exitTimer;
@@ -34,7 +36,7 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
         base.DoFrameUpdateLogic();
         enemy.MoveEnemy(Vector2.zero);
         //Debug.Log("salsallaslsal");
-        Debug.Log("am scos: " + GlobalVars.GetAction());
+        //Debug.Log("am scos: " + GlobalVars.GetAction());
         if (_timer > _timeBetweenShots)
         {
             _timer = 0f;

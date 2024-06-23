@@ -10,13 +10,14 @@ public class PlayerCombat : MonoBehaviour
  
     [SerializeField] Transform SideAttackTransform, UpAttackTransform, DownAttackTransform;
     [SerializeField] Vector2 SideAttackArea, UpAttackArea, DownAttackArea;
-
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform attackTransform;
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private LayerMask attackableLayer;
     [SerializeField] private float damageAmount = 20f;
     [SerializeField] private float timeBtwAttacks = 0.15f;
     [SerializeField] GameObject slashEffect;
+    public float knockbackForce = 5f;
 
     public bool ShouldBeDamaging { get; private set; } = false;
 
@@ -28,36 +29,33 @@ public class PlayerCombat : MonoBehaviour
 
     private float moveInput, yInput;
 
+    private void Awake()
+    {
+        rb.GetComponent<Rigidbody2D>();
+    }
     private void Start()
     {
         animator.GetComponent<Animator>();
-
         attackTimeCounter = timeBtwAttacks;
     }
-
     void Update()
     {
         GetInputs();
         if (UserInput.instance.controls.Attacking.Attack.WasPressedThisFrame() && attackTimeCounter >= timeBtwAttacks)
         {
             attackTimeCounter = 0f;
-            GlobalVars.AddToActionArray(PlayerAction.MeleeAttack);
             animator.SetTrigger("attack");
         }
-
         attackTimeCounter += Time.deltaTime;
     }
-
     void GetInputs()
     {
         moveInput = UserInput.instance.moveInput.x;
         yInput = UserInput.instance.moveInput.y;
     }
-
     public IEnumerator DamageWhileSlashIsActive()
     {
         ShouldBeDamaging = true;
-
         while (ShouldBeDamaging)
         {
             if (yInput >= Mathf.Abs(moveInput) && yInput >= 0.3)
@@ -83,6 +81,8 @@ public class PlayerCombat : MonoBehaviour
                 if (iDamageable != null)
                 {
                     iDamageable.TakeDamage(damageAmount);
+                    iDamageables.Add(iDamageable);
+                    ApplyKnockback(hits[i]);
                 }
             }
             yield return null;
@@ -90,7 +90,6 @@ public class PlayerCombat : MonoBehaviour
 
         ReturnAttackablesToDamageable();
     }
-
     void SlashEffectAngle(GameObject _slashEffect, int _effectAngle, Transform _attackTransform)
     {
         _slashEffect = Instantiate(_slashEffect, _attackTransform);
@@ -108,6 +107,12 @@ public class PlayerCombat : MonoBehaviour
         iDamageables.Clear();
     }
 
+    private void ApplyKnockback(RaycastHit2D hit)
+    {
+        Vector2 knockbackDirection = (Vector2)transform.position - hit.point;
+        Debug.Log("knockback = " + knockbackDirection);
+        rb.AddForce(2f * knockbackForce * knockbackDirection, ForceMode2D.Impulse);
+    }
 
     void OnDrawGizmos()
     {

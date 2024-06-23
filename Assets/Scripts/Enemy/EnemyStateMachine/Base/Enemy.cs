@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public bool IsAggroed { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
     public bool HasTakenDamage { get; set; }
+    public float knockbackForce = 10f;
     #endregion
 
     #region ScriptableObject Variables
@@ -43,8 +44,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         StateMachine = new EnemyStateMachine();
 
         IdleState = new EnemyIdleState(this, StateMachine);
-        AttackState = new EnemyAttackState(this, StateMachine);
         ChaseState = new EnemyChaseState(this, StateMachine);
+        AttackState = new EnemyAttackState(this, StateMachine);
     }
 
     public void Start()
@@ -74,7 +75,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     {
         HasTakenDamage = true;
         animator.SetTrigger("Hurt");
-
+        RB.AddForce(RB.position + new Vector2(100f, 15f), ForceMode2D.Impulse);
         CurrentHealth -= damageAmount;
         if (CurrentHealth <= 0f) {
             animator.SetTrigger("Death");
@@ -115,7 +116,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         }
 
     }
-
+   
     #endregion
 
     #region Distance Checks

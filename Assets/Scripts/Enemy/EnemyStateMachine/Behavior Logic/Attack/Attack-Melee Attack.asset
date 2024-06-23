@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775342c0183629b44bd17616e3448ea5, type: 3}
+  m_Name: Attack-Melee Attack
+  m_EditorClassIdentifier: 
+  _timeBetweenAttacks: 1.5
+  _timeUntilExit: 2
+  _distanceToCountExit: 3
+  rangeCollider: {fileID: 0}
+  detectionRange: 5
+  _attackRange: 1.5
+  _attackDamage: 20
+  playerHealth: {fileID: 0}
+  speed: 2.5

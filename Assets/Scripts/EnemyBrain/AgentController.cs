@@ -19,19 +19,20 @@ public class AgentController : MonoBehaviour
     private State_Class newState;
 
     public PlayerHealth playerHealth;
-    private int enemyHealth;
+    public Enemy enemy;
+    //public Lurker lurker;
 
-    public Lurker lurker;
+    private void Update()
+    {
+        Invoke("ExampleRound", 5);
+    }
 
     public State_Class GetMyState()
     {
         State_Class state = new State_Class();
+        state.stateString = $"{playerHealth.currentHealth},{enemy.CurrentHealth},{enemy.transform.position},{playerHealth.transform.position}";
 
-        playerHealth.maxHealth = 60;
-        enemyHealth = 40;
-        state.stateString = playerHealth.currentHealth + "," + enemyHealth;
-
-
+        Debug.Log(state.stateString);
         return state;
     }
 
@@ -44,7 +45,7 @@ public class AgentController : MonoBehaviour
             //Player died
             reward -= 1f;
         }
-        else if(enemyHealth <= 0)
+        else if(enemy.CurrentHealth <= 0)
         {
             reward += 1f;
         }
@@ -55,7 +56,7 @@ public class AgentController : MonoBehaviour
     public void AgentAttack()
     {
         Debug.Log("Agent attacked");
-        playerHealth.currentHealth -= 20;
+        //playerHealth.currentHealth -= 20;
     }
 
     public void AgentDefend()
@@ -66,25 +67,18 @@ public class AgentController : MonoBehaviour
     public void AgentRun()
     {
         Debug.Log("Agent ran");
-        enemyHealth -= 10;
+        //enemy.CurrentHealth -= 10;
     }
 
     public void EnemyAttack()
     {
         Debug.Log("Player attacked back");
-        enemyHealth -= 20;
-    }
-
-    public void InitBrain()
-    {
-
+        //enemy.CurrentHealth -= 20;
     }
 
     public void ExampleRound()
     {
-        Debug.Log("AAAAAAAAAAAAAAAAAA");
         currentState = GetMyState();
-
         string choice = myBrainScript.MakeAChoice(currentState.stateString);
 
         if(choice == actions[0])
