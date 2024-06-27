@@ -6,11 +6,11 @@ using UnityEngine;
 public class EnemyAttackSingleBullet : EnemyAttackSOBase
 {
     [SerializeField] private Rigidbody2D Bullet;
-    [SerializeField] private float _timeBetweenShots = 2f;
+    [SerializeField] private float _timeBetweenShots = 2.5f;
     [SerializeField] private float _timeUntilExit = 3;
     [SerializeField] private float _distanceToCountExit = 3f;
-    [SerializeField] private float _bulletSpeed = 10f;
-    [SerializeField ] private float attackDamage = 20;
+    [SerializeField] private float _bulletSpeed = 20f;
+    //[SerializeField ] private float attackDamage = 20;
 
 
     private float _timer;
@@ -35,7 +35,7 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
     {
         base.DoFrameUpdateLogic();
         enemy.MoveEnemy(Vector2.zero);
-        //Debug.Log("salsallaslsal");
+
         //Debug.Log("am scos: " + GlobalVars.GetAction());
         if (_timer > _timeBetweenShots)
         {
@@ -43,6 +43,10 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
             Vector2 dir = (playerTransform.position - new Vector3(0, 1.25f, 0) - enemy.transform.position).normalized;
             Rigidbody2D bullet = GameObject.Instantiate(Bullet, enemy.transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
             bullet.velocity = dir * _bulletSpeed;
+            if(playerTransform.position.x < enemy.transform.position.x) 
+            {
+                bullet.transform.localScale *= -1;
+            }
         }
 
         if (Vector2.Distance(playerTransform.position, enemy.transform.position) > _distanceToCountExit)

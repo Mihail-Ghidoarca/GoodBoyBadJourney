@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Chase-Player Chase", menuName = "Enemy Logic/Chase Logic/Player Chase")]
+[CreateAssetMenu(fileName = "Chase-Run Away", menuName = "Enemy Logic/Chase Logic/Run Away")]
 
-public class EnemyChaseToPlayer : EnemyChaseSOBase
+public class EnemyChaseRunAway : EnemyChaseSOBase
 {
-    [SerializeField] private float _movementSpeed;
-    public LayerMask groundLayer;
+    [SerializeField] private float _runAwaySpeed = 1.5f;
 
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
@@ -27,13 +26,13 @@ public class EnemyChaseToPlayer : EnemyChaseSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        Vector2 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
-        enemy.MoveEnemy(moveDirection * _movementSpeed);
+        Vector2 runDir = -(playerTransform.position - transform.position).normalized;
+        enemy.MoveEnemy(runDir * _runAwaySpeed);
     }
+
     public override void DoPhysicsUpdateLogic()
     {
         base.DoPhysicsUpdateLogic();
-
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
@@ -46,6 +45,3 @@ public class EnemyChaseToPlayer : EnemyChaseSOBase
         base.ResetValues();
     }
 }
-
-
-

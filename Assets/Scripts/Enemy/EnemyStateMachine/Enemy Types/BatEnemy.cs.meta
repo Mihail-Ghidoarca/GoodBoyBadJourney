@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d35b5a083498a7d43bc9efc5084eb721
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <animator>k__BackingField: {instanceID: 0}
+  - EnemyIdleBase: {instanceID: 0}
+  - EnemyChaseBase: {fileID: 11400000, guid: 9ac9f2f7bc549cc458ee7f0a74f0361e, type: 2}
+  - EnemyAttackBase: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

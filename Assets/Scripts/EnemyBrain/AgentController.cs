@@ -11,8 +11,8 @@ public class AgentController : MonoBehaviour
     public List<string> actions = new List<string>()
     {
         "Attack",
-        "Defend",
-        "Run"
+        "Run",
+        "Wait"
     };
 
     private State_Class currentState;
@@ -40,14 +40,14 @@ public class AgentController : MonoBehaviour
     {
         float reward = 0f;
 
-        if(playerHealth.currentHealth <= 0)
+        if (playerHealth.currentHealth <= 0)
         {
             //Player died
-            reward -= 1f;
-        }
-        else if(enemy.CurrentHealth <= 0)
-        {
             reward += 1f;
+        }
+        else if (enemy.CurrentHealth <= 0)
+        {
+            reward -= 1f;
         }
 
         return reward;
@@ -55,13 +55,12 @@ public class AgentController : MonoBehaviour
 
     public void AgentAttack()
     {
-        Debug.Log("Agent attacked");
-        //playerHealth.currentHealth -= 20;
+        Debug.Log("Agent Attacked");
     }
 
-    public void AgentDefend()
+    public void AgentWait()
     {
-        Debug.Log("Agent defended");
+        Debug.Log("Agent Waited");
     }
 
     public void AgentRun()
@@ -81,21 +80,21 @@ public class AgentController : MonoBehaviour
         currentState = GetMyState();
         string choice = myBrainScript.MakeAChoice(currentState.stateString);
 
-        if(choice == actions[0])
+        if (choice == actions[0])
         {
             AgentAttack();
         }
 
         else if (choice == actions[1])
         {
-            AgentDefend();
+            AgentWait();
         }
         else if (choice != actions[2])
         {
             AgentRun();
         }
 
-        EnemyAttack(); 
+        EnemyAttack();
 
         newState = GetMyState();
 

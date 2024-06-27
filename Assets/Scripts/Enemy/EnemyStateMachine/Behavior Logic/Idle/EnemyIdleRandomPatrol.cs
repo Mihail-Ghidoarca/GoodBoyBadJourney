@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyIdleRandomPatrol : EnemyIdleSOBase
 {
     [SerializeField]public float RandomMovementRange = 10f;
-    [SerializeField]public float RandomMovementSpeed = 1f;
+    [SerializeField]public float movementSpeed = 1f;
     
     private Vector3 _targetPos;
     private Vector3 _direction;
@@ -34,7 +34,7 @@ public class EnemyIdleRandomPatrol : EnemyIdleSOBase
     {
         base.DoFrameUpdateLogic();
         _direction = (_targetPos - enemy.transform.position).normalized;
-        enemy.MoveEnemy(_direction * RandomMovementSpeed);
+        enemy.MoveEnemy(_direction * movementSpeed);
         
         if ((enemy.transform.position - _targetPos).sqrMagnitude < 0.01f)
         {

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Attack-Single Bullet Attack
   m_EditorClassIdentifier: 
   Bullet: {fileID: 5366865956470908611, guid: 6cae2db803f9d60478831191008cdfc8, type: 3}
-  _timeBetweenShots: 2
+  _timeBetweenShots: 1.5
   _timeUntilExit: 3
-  _distanceToCountExit: 3
-  _bulletSpeed: 10
+  _distanceToCountExit: 2
+  _bulletSpeed: 15
+  attackDamage: 20

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5666237954775416638}
   m_Layer: 0
   m_Name: BulletSock
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -29.4026, y: -8.9287, z: 0.16411181}
-  m_LocalScale: {x: 2.3769314, y: 1.3854847, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.376931, y: 1.3854847, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300242, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
+  m_Sprite: {fileID: 21300168, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,7 +113,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!68 &628472278562611350
 EdgeCollider2D:
@@ -150,19 +150,21 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.12645964, y: 0.2540918}
-  - {x: -0.03153562, y: 0.2544675}
-  - {x: -0.029855307, y: 0.22528496}
-  - {x: 0.032150153, y: 0.2218956}
-  - {x: 0.032554585, y: -0.08887006}
-  - {x: 0.09208532, y: -0.09089651}
-  - {x: 0.12652612, y: -0.12489119}
-  - {x: 0.12574294, y: -0.21927468}
-  - {x: 0.09514664, y: -0.25003353}
-  - {x: 0.00011106953, y: -0.25065163}
-  - {x: -0.095312074, y: -0.22055429}
-  - {x: -0.12694031, y: -0.18581621}
-  - {x: -0.12816873, y: 0.25033623}
+  - {x: -0.24879429, y: 0.14915274}
+  - {x: -0.15264735, y: 0.14952843}
+  - {x: -0.1485204, y: 0.082568154}
+  - {x: 0.5006943, y: 0.08337624}
+  - {x: 0.5683041, y: 0.0018315883}
+  - {x: 0.5010987, y: -0.08047517}
+  - {x: -0.14891522, y: -0.082501605}
+  - {x: -0.15289293, y: -0.17320596}
+  - {x: -0.2519086, y: -0.19372998}
+  - {x: -0.25106287, y: -0.05484718}
+  - {x: -0.58483285, y: -0.04916842}
+  - {x: -0.5855109, y: 0.05974439}
+  - {x: -0.2517224, y: 0.057642207}
+  - {x: -0.25127706, y: 0.14166635}
+  - {x: -0.24838334, y: 0.15075031}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -180,8 +182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 3
-  animator: {fileID: 0}
+  animator: {fileID: -5666237954775416638}
   damage: 10
+  playerWasHit: 0
 --- !u!95 &-5666237954775416638
 Animator:
   serializedVersion: 5

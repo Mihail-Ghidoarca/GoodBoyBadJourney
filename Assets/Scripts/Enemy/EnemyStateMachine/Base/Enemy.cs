@@ -63,6 +63,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
+        if(RB.velocity == Vector2.zero)
+        {
+            animator.SetBool("isMoving", false);
+        }
     }
 
     public void FixedUpdate()
@@ -85,6 +89,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     public void Die()
     {
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
@@ -95,7 +100,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     public void MoveEnemy(Vector2 velocity)
     {
-         
+        animator.SetBool("isMoving", true);
         RB.velocity = new Vector2(velocity.x, 0f);
         CheckForLeftOrRightFacing(velocity);
     }
