@@ -69,7 +69,6 @@ public class EnemyAttackMelee : EnemyAttackSOBase
         }
         else
         {
-            enemy.animator.ResetTrigger("Attack");
             _exitTimer = 0f;
         }
 

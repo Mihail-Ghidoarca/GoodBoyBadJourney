@@ -6,32 +6,31 @@ using UnityEngine;
 using Random = System.Random;
 public static class GlobalVars
 {
-    public static Queue<PlayerAction> actionQueue = new Queue<PlayerAction>(); 
+    public static Stack<PlayerAction> actionStack = new Stack<PlayerAction>(); 
 
     private static Random random = new Random();
 
-    private const int maxActionsInQueue = 150;
-
+    private const int maxActionsInStack = 1;
+    
     public static void AddToActionArray(PlayerAction actionCode)
     {
-        //Debug.Log(actionQueue.Count);
-        if(actionQueue.Count == maxActionsInQueue)
+        PlayerAction lastAction;
+        if (actionStack.TryPeek(out lastAction))
         {
-            var lastAction = actionQueue.Dequeue();
-            actionCounter[(int)lastAction]--;
+            actionStack.Pop();
+            actionStack.Push(actionCode);
         }
-        actionQueue.Enqueue(actionCode);
-        actionCounter[(int)actionCode]++;
-
+        else
+            actionStack.Push(actionCode);
     }
 
     public static int[] actionCounter = new int[5];
 
     public static PlayerAction? GetAction()
     {
-        if(actionQueue.Count >= maxActionsInQueue)
+        if(actionStack.Count >= maxActionsInStack)
         {
-            var actionToBeCompared = random.Next(maxActionsInQueue);
+            var actionToBeCompared = random.Next(maxActionsInStack);
 
             int sum = 0;
 

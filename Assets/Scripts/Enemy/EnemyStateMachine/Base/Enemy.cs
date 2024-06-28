@@ -22,12 +22,12 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public float knockbackForce = 10f;
     #endregion
 
+    public List <EnemyAttackSOBase> Attacks = new();
     #region ScriptableObject Variables
 
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
     [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
     [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
-
     public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
     public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     public void Awake()
     {
-
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
         EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
@@ -92,8 +91,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
-
-
 
     #endregion
     #region Movement Functions

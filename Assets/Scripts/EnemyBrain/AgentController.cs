@@ -20,11 +20,20 @@ public class AgentController : MonoBehaviour
 
     public PlayerHealth playerHealth;
     public Enemy enemy;
+    public EnemyDamage enemyDamage;
     //public Lurker lurker;
+    private float pStartingHealth = -1;
+    private float timer;
+    private float timeForRoundExec = 5f;
 
     private void Update()
     {
-        Invoke("ExampleRound", 5);
+        timer += Time.deltaTime;
+        if (timer > timeForRoundExec)
+        {
+            ExampleRound();
+            timer = 0f;
+        }
     }
 
     public State_Class GetMyState()
@@ -36,16 +45,27 @@ public class AgentController : MonoBehaviour
         return state;
     }
 
-    public float RewardForActions()
+    public float RewardForActions(float playerStartHealth)
     {
         float reward = 0f;
 
-        if (playerHealth.currentHealth <= 0)
+        // if the enemy has a higher percentage of HP than the player, reward gets improved
+        if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) / 
+            ((enemy.MaxHealth - enemy.CurrentHealth) / enemy.MaxHealth) > 1)
         {
-            //Player died
             reward += 1f;
         }
-        else if (enemy.CurrentHealth <= 0)
+
+        // if the enemy has the same health percentage than the player, reward gets slighlty diminished
+        if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) /
+            ((enemy.MaxHealth - enemy.CurrentHealth) / enemy.MaxHealth) == 1)
+        {
+            reward -= 0.25f; //
+        }
+
+        // if the enemy has a lower percentage of HP than the player, reward gets diminished
+        else if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) /
+            ((enemy.MaxHealth - enemy.CurrentHealth) / enemy.MaxHealth) < 1)
         {
             reward -= 1f;
         }
@@ -69,36 +89,55 @@ public class AgentController : MonoBehaviour
         //enemy.CurrentHealth -= 10;
     }
 
-    public void EnemyAttack()
+    public void PlayerAction()
     {
-        Debug.Log("Player attacked back");
-        //enemy.CurrentHealth -= 20;
+        Debug.Log(GlobalVars.actionStack.Peek());
+        
     }
-
-    public void ExampleRound()
+    
+    public void EnemyChooseAction(string choice)
     {
-        currentState = GetMyState();
-        string choice = myBrainScript.MakeAChoice(currentState.stateString);
-
         if (choice == actions[0])
         {
             AgentAttack();
+            //playerHealth.TakeDamage(enemyDamage.damage);
         }
 
         else if (choice == actions[1])
         {
             AgentWait();
         }
-        else if (choice != actions[2])
+        else if (choice == actions[2])
         {
             AgentRun();
         }
 
-        EnemyAttack();
+    }
+
+
+    private void SetPlayerStartingHealth(int playerCurrentHealth) 
+    {
+        if (pStartingHealth == -1)
+        {
+            pStartingHealth = playerCurrentHealth;
+            return;
+        }
+        else
+            return;
+    }
+
+    public void ExampleRound()
+    {
+        SetPlayerStartingHealth(playerHealth.currentHealth);
+        currentState = GetMyState();
+        string choice = myBrainScript.MakeAChoice(currentState.stateString);
+
+        EnemyChooseAction(choice);
+        PlayerAction();
 
         newState = GetMyState();
 
-        float reward = RewardForActions();
+        float reward = RewardForActions(pStartingHealth);
 
         Debug.Log("Score is: " + reward);
 

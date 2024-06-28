@@ -9,7 +9,6 @@ public class EnemyAttackSOBase : ScriptableObject
     protected GameObject gameObject;
     protected AgentController agentController;
     protected Transform playerTransform;
-
     public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
         this.gameObject = gameObject;
@@ -21,7 +20,10 @@ public class EnemyAttackSOBase : ScriptableObject
 
     public virtual void DoEnterLogic() { }
     public virtual void DoExitLogic() { ResetValues(); }
-    public virtual void DoFrameUpdateLogic() { }
+    public virtual void DoFrameUpdateLogic() 
+    {
+       
+    }
     public virtual void DoPhysicsUpdateLogic() { }
     public virtual void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType) { }
 

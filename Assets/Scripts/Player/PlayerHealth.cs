@@ -33,6 +33,7 @@ public class PlayerHealth : MonoBehaviour
             animator.SetTrigger("isDead");
             Destroy(gameObject);
         }
+
     }
 
     

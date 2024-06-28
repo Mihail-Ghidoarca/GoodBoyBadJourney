@@ -154,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
                 _isJumpCut = false;
                 _isJumpFalling = false;
                 Jump();
+                GlobalVars.AddToActionArray(PlayerAction.Jump);
             }
             else if (CanWallJump() && LastPressedJumpTime > 0)
             {
@@ -393,7 +394,7 @@ public class PlayerMovement : MonoBehaviour
 
         SetGravityScale(0);
         animator.SetBool("isDashing", true);
-        
+        GlobalVars.AddToActionArray(PlayerAction.Dash);
         tr.emitting = true;
         while (Time.time - startTime <= Data.dashAttackTime)
         {

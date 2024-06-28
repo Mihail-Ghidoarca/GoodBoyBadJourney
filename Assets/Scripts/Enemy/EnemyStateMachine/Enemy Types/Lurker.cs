@@ -7,5 +7,11 @@ using UnityEngine;
 
 public class Lurker : Enemy
 {
+    [SerializeField] private EnemyAttackSOBase EnemyMeleeAttackBase;
+    [SerializeField] private EnemyAttackSOBase EnemyRangedAttackBase;
 
+    private void ChangeAttackState()
+    {
+        EnemyAttackBaseInstance.Initialize(gameObject, this);
+    }
 }

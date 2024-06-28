@@ -43,7 +43,7 @@ public class PlayerCombat : MonoBehaviour
         GetInputs();
         if (UserInput.instance.controls.Attacking.Attack.WasPressedThisFrame() && attackTimeCounter >= timeBtwAttacks)
         {
-            GlobalVars.actionQueue.Enqueue(PlayerAction.MeleeAttack);
+            GlobalVars.AddToActionArray(PlayerAction.MeleeAttack);
             attackTimeCounter = 0f;
             animator.SetTrigger("attack");
         }

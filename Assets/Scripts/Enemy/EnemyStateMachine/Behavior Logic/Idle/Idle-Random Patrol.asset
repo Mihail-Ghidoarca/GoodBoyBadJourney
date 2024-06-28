@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82bcde9925616c4c9ad4c4c91147bc4, type: 3}
   m_Name: Idle-Random Patrol
   m_EditorClassIdentifier: 
+  currentPosition: {x: 0, y: 0}
   RandomMovementRange: 4
-  RandomMovementSpeed: 3
+  movementSpeed: 4
