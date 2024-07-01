@@ -23,27 +23,4 @@ public static class GlobalVars
         else
             actionStack.Push(actionCode);
     }
-
-    public static int[] actionCounter = new int[5];
-
-    public static PlayerAction? GetAction()
-    {
-        if(actionStack.Count >= maxActionsInStack)
-        {
-            var actionToBeCompared = random.Next(maxActionsInStack);
-
-            int sum = 0;
-
-            for (int i = 0; i < actionCounter.Length; i++)
-            {
-                sum += actionCounter[i];
-                if(actionToBeCompared < sum)
-                {
-                    return (PlayerAction)i;
-                }
-            }
-        }
-
-        return null;
-    }
 }

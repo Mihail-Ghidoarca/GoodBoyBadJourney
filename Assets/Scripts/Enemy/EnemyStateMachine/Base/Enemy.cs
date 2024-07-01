@@ -21,20 +21,18 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public bool HasTakenDamage { get; set; }
     public float knockbackForce = 10f;
     #endregion
-
-    public List <EnemyAttackSOBase> Attacks = new();
     #region ScriptableObject Variables
 
-    [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
-    [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
-    [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
+    [SerializeField] protected EnemyIdleSOBase EnemyIdleBase;
+    [SerializeField] protected EnemyChaseSOBase EnemyChaseBase;
+    [SerializeField] protected EnemyAttackSOBase EnemyAttackBase;
     public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
     public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
 
     #endregion
 
-    public void Awake()
+    public virtual void Awake()
     {
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
@@ -47,7 +45,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         AttackState = new EnemyAttackState(this, StateMachine);
     }
 
-    public void Start()
+    public virtual void Start()
     {
         CurrentHealth = MaxHealth;
         RB = GetComponent<Rigidbody2D>();
@@ -59,7 +57,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         StateMachine.Initialize(IdleState);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
         if(RB.velocity == Vector2.zero)
@@ -68,7 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         }
     }
 
-    public void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         StateMachine.CurrentEnemyState.PhysicsUpdate();
     }

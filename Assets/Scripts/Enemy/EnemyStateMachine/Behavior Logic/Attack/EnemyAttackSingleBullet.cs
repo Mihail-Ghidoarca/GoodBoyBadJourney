@@ -34,7 +34,7 @@ public class EnemyAttackSingleBullet : EnemyAttackSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        //enemy.MoveEnemy(Vector2.zero);
+        enemy.MoveEnemy(Vector2.zero);
 
         //Debug.Log("am scos: " + GlobalVars.GetAction());
         if (_timer > _timeBetweenShots)

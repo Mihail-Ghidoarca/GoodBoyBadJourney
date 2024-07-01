@@ -54,7 +54,7 @@ public class EnemyAttackMelee : EnemyAttackSOBase
 
         Vector2 target = new Vector2(playerTransform.position.x, enemy.RB.position.y);
         Vector2 newPos = Vector2.MoveTowards(enemy.RB.position, target, speed);
-        enemy.MoveEnemy(newPos);
+        //enemy.MoveEnemy(newPos);
 
 
         if (Vector2.Distance(playerTransform.position, enemy.RB.position) <= _attackRange)

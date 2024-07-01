@@ -118,7 +118,7 @@ public class PlayerCombat : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(SideAttackTransform.position, attackRange);
+        Gizmos.DrawWireCube(SideAttackTransform.position, SideAttackArea);
         Gizmos.DrawWireCube(DownAttackTransform.position, DownAttackArea);
         Gizmos.DrawWireCube(UpAttackTransform.position, UpAttackArea);
     }
