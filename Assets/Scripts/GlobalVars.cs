@@ -3,11 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using Random = System.Random;
 public static class GlobalVars
 {
-    public static Stack<PlayerAction> actionStack = new Stack<PlayerAction>(); 
-
+    public static Stack<PlayerAction> actionStack = new Stack<PlayerAction>();
+    public static float playerScore = 0;
+    public static float maxPlayerScore;
     private static Random random = new Random();
 
     private const int maxActionsInStack = 1;

@@ -25,6 +25,7 @@ public class AgentController : MonoBehaviour
     private float timer;
     private float timeForRoundExec = 5f;
     private float distanceToPlayer;
+    private bool fighting = false;
     private void Start()
     {
         enemy = GetComponent<Enemy>();
@@ -33,10 +34,20 @@ public class AgentController : MonoBehaviour
 
     private void Update()
     {
+        GetDistanceToPlayer();
         timer += Time.deltaTime;
         if (timer > timeForRoundExec)
         {
-            ExampleRound();
+            if (distanceToPlayer < 20f && !fighting)
+            {
+                SetPlayerStartingHealth(playerHealth.currentHealth);
+                fighting = true;
+            }
+            else if (fighting && distanceToPlayer > 0f)
+                fighting = false;
+
+            if(fighting)
+                ExampleRound();
             timer = 0f;
         }
     }
@@ -46,7 +57,7 @@ public class AgentController : MonoBehaviour
         State_Class state = new State_Class();
         state.stateString = $"{playerHealth.currentHealth},{enemy.CurrentHealth},{enemy.transform.position},{playerHealth.transform.position}";
 
-        Debug.Log(state.stateString);
+        //Debug.Log(state.stateString);
         return state;
     }
 
@@ -58,21 +69,21 @@ public class AgentController : MonoBehaviour
         if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) /
             ((enemy.MaxHealth - enemy.CurrentHealth) / enemy.MaxHealth) > 1)
         {
-            reward += 1f;
+            return 1f;
         }
 
         // if the enemy has the same health percentage than the player, reward gets slightly diminished
         if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) /
             ((enemy.MaxHealth - enemy.CurrentHealth) / enemy.MaxHealth) == 1)
         {
-            reward -= 0.25f; //
+            return 0.25f; //
         }
 
         // if the enemy has a lower percentage of HP than the player, reward gets diminished
-        else if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) /
+        if (((playerStartHealth - playerHealth.currentHealth) / playerHealth.maxHealth) /
             ((enemy.MaxHealth - enemy.CurrentHealth) / enemy.MaxHealth) < 1)
         {
-            reward -= 1f;
+            return -1f;
         }
 
         return reward;
@@ -84,7 +95,7 @@ public class AgentController : MonoBehaviour
         if (enemy is ILurker lurkerEnemy)
         {
             Debug.Log(distanceToPlayer);
-            if (distanceToPlayer <= 5f)
+            if (distanceToPlayer <= 10f)
             {
                 lurkerEnemy.ChangeAttackState("melee");
 
@@ -108,13 +119,15 @@ public class AgentController : MonoBehaviour
         GetDistanceToPlayer();
         if (enemy is ILurker lurkerEnemy)
         {
-            if (distanceToPlayer <= 5f)
+            if (distanceToPlayer <= 10f)
             {
                 lurkerEnemy.ChangeChaseState("chase");
+                lurkerEnemy.ChangeAttackState("melee");
             }
             else
             {
                 lurkerEnemy.ChangeChaseState("run");
+                lurkerEnemy.ChangeAttackState("ranged");
             }
         }
 
@@ -127,6 +140,17 @@ public class AgentController : MonoBehaviour
 
     public void EnemyChooseAction(string choice)
     {
+        if (enemy is ILurker lurkerEnemy)
+            if (distanceToPlayer <= 10f)
+            {
+                lurkerEnemy.ChangeChaseState("chase");
+                lurkerEnemy.ChangeAttackState("melee");
+            }
+            else
+            {
+                lurkerEnemy.ChangeChaseState("run");
+                lurkerEnemy.ChangeAttackState("ranged");
+            }
         if (choice == actions[0])
         {
             AgentAttack();
@@ -160,7 +184,7 @@ public class AgentController : MonoBehaviour
 
     private void GetDistanceToPlayer()
     {
-        distanceToPlayer = Mathf.Abs(enemy.transform.position.x - playerHealth.gameObject.transform.position.x);
+        distanceToPlayer = Vector2.Distance(playerHealth.gameObject.transform.position, enemy.RB.position);
     }
 
     private void EnemyMakeChoice(string choice)
@@ -181,7 +205,6 @@ public class AgentController : MonoBehaviour
 
     public void ExampleRound()
     {
-        SetPlayerStartingHealth(playerHealth.currentHealth);
         currentState = GetMyState();
         string choice = myBrainScript.MakeAChoice(currentState.stateString);
 

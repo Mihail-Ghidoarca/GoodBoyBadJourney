@@ -19,6 +19,7 @@ public class UserInput : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         controls = new Controls();
@@ -33,6 +34,7 @@ public class UserInput : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Disable();
+        if(gameObject)
+            controls.Disable();
     }
 }

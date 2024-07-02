@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504767f86fb85f40b66f23a0c81ae10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 3
+  delay: 2
   animator: {fileID: -5666237954775416638}
   damage: 10
   playerWasHit: 0

@@ -112,7 +112,7 @@ public class PlayerCombat : MonoBehaviour
     {
         Vector2 knockbackDirection = (Vector2)transform.position - hit.point;
         Debug.Log("knockback = " + knockbackDirection);
-        rb.AddForce(2f * knockbackForce * knockbackDirection, ForceMode2D.Impulse);
+        rb.AddForce(1f * knockbackForce * knockbackDirection, ForceMode2D.Impulse);
     }
 
     void OnDrawGizmos()

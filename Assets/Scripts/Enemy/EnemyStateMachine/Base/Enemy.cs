@@ -18,8 +18,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public EnemyChaseState ChaseState { get; set; }
     public bool IsAggroed { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
+    public bool IsMelee { get; set; }
     public bool HasTakenDamage { get; set; }
     public float knockbackForce = 10f;
+    [SerializeField] public BoxCollider2D rangeCollider;
     #endregion
     #region ScriptableObject Variables
 
@@ -76,11 +78,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     {
         HasTakenDamage = true;
         animator.SetTrigger("Hurt");
-        RB.AddForce(RB.position + new Vector2(100f, 15f), ForceMode2D.Impulse);
+        RB.AddForce(knockbackForce * new Vector2(3f, 1f), ForceMode2D.Impulse);
+
         CurrentHealth -= damageAmount;
         if (CurrentHealth <= 0f) {
             animator.SetTrigger("Death");
             Die();
+            GlobalVars.playerScore += 1;
         }
     }
 
@@ -131,6 +135,10 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         IsWithinStrikingDistance = isWithinStrikingDistance;
     }
 
+    public void SetMeleeCheck(bool isMelee)
+    {
+        IsMelee = isMelee;
+    }
     #endregion
 
     #region Animation Triggers

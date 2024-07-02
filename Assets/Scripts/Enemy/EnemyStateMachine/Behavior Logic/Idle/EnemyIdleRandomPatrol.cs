@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyIdleRandomPatrol : EnemyIdleSOBase
 {
-    [SerializeField]public float RandomMovementRange = 10f;
+    [SerializeField]public float RandomMovementRange = 5f;
     [SerializeField]public float movementSpeed = 1f;
     
     private Vector3 _targetPos;
